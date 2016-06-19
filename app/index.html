@@ -1,30 +1,58 @@
 <!DOCTYPE html>
-<html ng-app="gemStore">
+<html>
 
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="utf-8"/>
     <title>AngularJS</title>
+    <!--
     <link data-require="bootstrap-css" data-semver="3.1.1" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link data-require="semantic-ui@*" data-semver="0.9.6" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.9.6/css/semantic.min.css" />
-    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script data-require="jquery@*" data-semver="3.0.0" src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
     <script data-require="semantic-ui@*" data-semver="0.9.6" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.9.6/javascript/semantic.min.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <script data-require="angular.js@1.2.x" src="http://code.angularjs.org/1.2.15/angular.js" data-semver="1.2.15"></script>
-    <script src="app.js"></script>
-    <script src="products.js"></script>
-  </head>
+    <script data-require="angular.js@1.5.x" src="http://code.angularjs.org/1.5.7/angular.js" data-semver="1.2.15"></script>
+    -->
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="style.css"/>
+    <script type="text/javascript" src="resources/angular.min.js"></script>
+    <script type="text/javascript" src="resources/angular-resource.min.js"></script>
+    <script type="text/javascript" src="resources/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="products.js"></script>
+    <script type="text/javascript" src="services/translation.js"></script>
 
-  <body ng-controller="StoreController as store">
-    <!--  Store Header  -->
-    <header>
-      <h1 class="text-center">Flatlander Crafted Gems</h1>
-      <h2 class="text-center">– an Angular store –</h2>
-    </header>
+</head>
 
-    <!--  Products Container  -->
-    <div class="list-group">
-      <!--  Product Container  -->
-      <div class="list-group-item" ng-repeat="product in store.products | orderBy:'-price'">
+<body>
+
+<div ng-app="gemStore" ng-controller="StoreController as store">
+    <section class="margin-bottom-20">
+        <h4>Select language for translation:</h4>
+        <select class="form-control" ng-change="translate()" ng-model="selectedLanguage">
+            <option value="en">English</option>
+            <option value="ua">Ukrainian</option>
+        </select>
+    </section>
+
+    <h4>Selected language: <strong>{{selectedLanguage}}</strong>
+    </h4>
+    <h4>Translated word goes here :</h4>
+    <p>
+        {{translation.STORE_TITLE}}
+    </p>
+
+<!--  Store Header  -->
+<header>
+    <h1 class="text-center">Flatlander Crafted Gems</h1>
+
+    <h2 class="text-center">– an Angular store –</h2>
+</header>
+
+<!--  Products Container  -->
+<div class="list-group">
+    <!--  Product Container  -->
+    <div class="list-group-item" ng-repeat="product in products | orderBy:'-price'">
 
         <!-- $index Practice:  -->
         <h3>Gem #{{$index + 1}}: {{product.name | uppercase}}<em class="pull-right">{{product.price | currency}}</em>
@@ -32,21 +60,23 @@
 
         <!-- Image Gallery  -->
         <div ng-show="product.images.length" ng-controller="GalleryController as gallery">
-          <div class="img-wrap">
-            <img ng-src="{{product.images[gallery.imageIndex]}}" class="img-thumbnail center-block" />
-          </div>
-          <ul class="img-thumbnails clearfix">
-            <li class="small-image pull-left thumbnail" ng-repeat="image in product.images" ng-click="gallery.currentImageChange($index)">
-              <img ng-src="{{image}}" />
-            </li>
-          </ul>
+            <div class="img-wrap">
+                <img ng-src="{{product.images[gallery.imageIndex]}}" class="img-thumbnail center-block"/>
+            </div>
+            <ul class="img-thumbnails clearfix">
+                <li class="small-image pull-left thumbnail" ng-repeat="image in product.images"
+                    ng-click="gallery.currentImageChange($index)">
+                    <img ng-src="{{image}}"/>
+                </li>
+            </ul>
         </div>
 
         <!-- Product Tabs  -->
         <product-tabs></product-tabs>
 
-      </div>
     </div>
-  </body>
+</div>
+    </div>
+</body>
 
 </html>
