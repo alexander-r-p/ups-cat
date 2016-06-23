@@ -21,62 +21,77 @@
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript" src="js/directives/products.js"></script>
     <script type="text/javascript" src="js/services/translation.js"></script>
+    <script type="text/javascript" src="js/controllers/main.js"></script>
 
+    <style type="text/css">
+        .right {
+            float:right;
+        }
+        .left {
+            margin-right: 200px;
+        }
+        .oneoffourdiv {
+            width: 50%;
+            height: 50%;
+            float: left;
+        }
+    </style>
 </head>
 
 <body>
 
 <div ng-app="gemStore" ng-controller="StoreController as store">
-    <section class="margin-bottom-20">
-        <h4>Select language for translation:</h4>
-        <select class="form-control" ng-change="translate()" ng-model="selectedLanguage">
-            <option value="en">English</option>
-            <option value="ua">Ukrainian</option>
-        </select>
-    </section>
-
-    <h4>Selected language: <strong>{{selectedLanguage}}</strong>
-    </h4>
-    <h4>Translated word goes here :</h4>
-    <p>
-        {{translation.STORE_TITLE}}
-    </p>
-
-<!--  Store Header  -->
-<header>
-    <h1 class="text-center">Flatlander Crafted Gems</h1>
-
-    <h2 class="text-center">– an Angular store –</h2>
-</header>
-
-<!--  Products Container  -->
-<div class="list-group">
-    <!--  Product Container  -->
-    <div class="list-group-item" ng-repeat="product in products | orderBy:'-price'">
-
-        <!-- $index Practice:  -->
-        <h3>Gem #{{$index + 1}}: {{product.name | uppercase}}<em class="pull-right">{{product.price | currency}}</em>
-        </h3>
-
-        <!-- Image Gallery  -->
-        <div ng-show="product.images.length" ng-controller="GalleryController as gallery">
-            <div class="img-wrap">
-                <img ng-src="{{product.images[gallery.imageIndex]}}" class="img-thumbnail center-block"/>
-            </div>
-            <ul class="img-thumbnails clearfix">
-                <li class="small-image pull-left thumbnail" ng-repeat="image in product.images"
-                    ng-click="gallery.currentImageChange($index)">
-                    <img ng-src="{{image}}"/>
-                </li>
-            </ul>
+    <div id="wrapper">
+        <div class="right">
+            <section>
+                <select ng-change="translate()" ng-model="selectedLanguage">
+                    <option value="en">English</option>
+                    <option value="ua">Ukrainian</option>
+                    <option value="ru">Russian</option>
+                </select>
+            </section>
         </div>
+        <div class="left">
+            {{translation.STORE_TITLE}}
+        </div>
+    </div>
 
-        <!-- Product Tabs  -->
-        <product-tabs></product-tabs>
+    <!--  Store Header  -->
+    <header>
+        <h1 class="text-center">Flatlander Crafted Gems</h1>
 
+        <h2 class="text-center">– an Angular store –</h2>
+    </header>
+
+    <!--  Products Container  -->
+    <div class="list-group container">
+        <!--  Product Container  -->
+        <div class="list-group-item col-md-4" ng-repeat="product in products | orderBy:'-price'">
+
+            <!-- $index Practice:  -->
+            <h3>Gem #{{$index + 1}}: {{product.name | uppercase}}<em class="pull-right">{{product.price |
+                currency}}</em>
+            </h3>
+
+            <!-- Image Gallery  -->
+            <div ng-show="product.images.length" ng-controller="GalleryController as gallery">
+                <div class="img-wrap">
+                    <img ng-src="{{product.images[gallery.imageIndex]}}" class="img-thumbnail center-block"/>
+                </div>
+                <ul class="img-thumbnails clearfix">
+                    <li class="small-image pull-left thumbnail" ng-repeat="image in product.images"
+                        ng-click="gallery.currentImageChange($index)">
+                        <img ng-src="{{image}}"/>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Product Tabs  -->
+            <product-tabs></product-tabs>
+
+        </div>
     </div>
 </div>
-    </div>
 </body>
 
 </html>
