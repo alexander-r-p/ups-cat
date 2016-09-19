@@ -1,0 +1,48 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Mango (Fruit)</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div style="border: 0px;" class="list-group-item col-md-3" ng-repeat="product in products | orderBy:'-name':true">
+
+                    <!-- $index Practice:  -->
+                    <a style="cursor: pointer;" ng-click="showAdvanced($event)"><h3>{{product.name}}</h3></a>
+                    <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
+
+                    <!-- Image Gallery  -->
+                    <div ng-show="product.images.length" style="margin-top: 60px">
+                        <div class="img-wrap">
+                            <img ng-click="showAdvanced($event)" ng-src="{{product.images[product.currentImageIndex]}}" class="img-thumbnail center-block"/>
+                        </div>
+                        <ul class="img-thumbnails clearfix">
+                            <li class="small-image pull-left thumbnail" ng-repeat="image in product.images" ng-click="currentImageChange(product, $index)">
+                                <img ng-src="{{image}}"/>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                More on Wikipedia
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button>
+            <md-button ng-click="answer('useful')">
+                Useful
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,99 +1,121 @@
 /**
  * Created by Alexander on 20.06.2016.
  */
-app.controller('GalleryController', ['$scope', function ($scope) {
-    $scope.imageIndex = 0;
-    $scope.currentImageChange = function (imageNumber) {
-        console.log(imageNumber);
-        $scope.imageIndex = imageNumber || 0;
-    };
-}]);
+app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', function ($scope, translationService, $mdDialog) {
+    //$scope.imageIndex = 0;
+    $scope.currentNavItem = 'home';
 
-app.controller('StoreController', ['$scope', 'translationService', function ($scope, translationService) {
+    $scope.goto = function(navItem) {
+        $scope.currentNavItem = navItem;
+    }
+
+    $scope.currentImageChange = function (product, imageNumber) {
+        console.log(imageNumber);
+        product.currentImageIndex = imageNumber || 0;
+    };
+
+    $scope.showAdvanced = function (ev) {
+        console.log(ev);
+        $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'dialog1.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
+
+    function DialogController($scope, $mdDialog) {
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    };
+
     $scope.products = [{
-        name: 'Azurite',
-        description: "Some gems have hidden qualities beyond their luster, beyond their shine... Azurite is one of those gems.",
-        shine: 8,
-        price: 110.50,
+        name: 'UPS Type A 500',
+        description: "Есть стабилизатор, индикатор напряжения.",
+        voltage: "12V",
+        capacity: "350W",
+        maxCapacity: "500W",
+        price: 2300,
         rarity: 7,
         color: '#CCC',
         faces: 14,
+        currentImageIndex: 0,
         images: [
-            "img/gem-02.gif",
-            "img/gem-05.gif",
-            "img/gem-09.gif"
-        ],
-        reviews: [{
-            stars: 5,
-            body: "I love this gem!",
-            author: "joe@thomas.com",
-            createdOn: 1397490980837
-        }, {
-            stars: 1,
-            body: "This gem sucks.",
-            author: "tim@hater.com",
-            createdOn: 1397490980837
-        }]
+            "img/ups-a-01.png",
+            "img/ups-a-02.png",
+            "img/ups-a-03.png"
+        ]
     }, {
-        name: 'Bloodstone',
-        description: "Origin of the Bloodstone is unknown, hence its low value. It has a very high shine and 12 sides, however.",
-        shine: 9,
-        price: 22.90,
+        name: 'UPS Type B 700',
+        description: "Есть стабилизатор, индикатор напряжения, зарядка с функцией «Вампир» для использования различных источников енергии(солнечной, термопреобразователей, доп.аккумулятора для зарядки основного), выход сигнала на включение внешнего генератора електроэнергии, выход для подключения GSM сигнализации",
+        voltage: "12V",
+        capacity: "450W",
+        maxCapacity: "700W",
+        price: 3200,
         rarity: 6,
         color: '#EEE',
         faces: 12,
+        currentImageIndex: 0,
         images: [
-            "img/gem-01.gif",
-            "img/gem-03.gif",
-            "img/gem-04.gif",
-        ],
-        reviews: [{
-            stars: 3,
-            body: "I think this gem was just OK, could honestly use more shine, IMO.",
-            author: "JimmyDean@sausage.com",
-            createdOn: 1397490980837
-        }, {
-            stars: 4,
-            body: "Any gem with 12 faces is for me!",
-            author: "gemsRock@alyssaNicoll.com",
-            createdOn: 1397490980837
-        }]
+            "img/ups-a-01.png",
+            "img/ups-a-02.png",
+            "img/ups-a-03.png"
+        ]
     }, {
-        name: 'Zircon',
-        description: "Zircon is our most coveted and sought after gem. You will pay much to be the proud owner of this gorgeous and high shine gem.",
-        shine: 70,
-        price: 1100,
+        name: 'UPS Type C 1000',
+        description: "Есть стабилизатор, индикатор напряжения, солнечная зарядка с функцией PPM (поиска точки максимальной мощности) мощной солнечной батареи, выход сигнала на включение внешнего генератора електроэнергии, выход для подключения GSM сигнализации.",
+        voltage: "12V",
+        capacity: "600W",
+        maxCapacity: "1000W",
+        price: 3600,
         rarity: 2,
         color: '#000',
         faces: 6,
+        currentImageIndex: 0,
         images: [
-            "img/gem-06.gif",
-            "img/gem-07.gif",
-            "img/gem-10.gif"
-        ],
-        reviews: [{
-            stars: 1,
-            body: "This gem is WAY too expensive for its rarity value.",
-            author: "turtleguyy@zdn.me",
-            createdOn: 1397490980837
-        }, {
-            stars: 1,
-            body: "BBW: High Shine != High Quality.",
-            author: "LouisW407@gmail.com",
-            createdOn: 1397490980837
-        }, {
-            stars: 1,
-            body: "Don't waste your rubles!",
-            author: "nat@flatland.com",
-            createdOn: 1397490980837
-        }]
+            "img/ups-a-01.png",
+            "img/ups-a-02.png",
+            "img/ups-a-03.png"
+        ]
+    }, {
+        name: 'UPS Type D 1000',
+        description: "Есть стабилизатор, индикатор напряжения, солнечная зарядка с функцией PPM (поиска точки максимальной мощности) мощной солнечной батареи, выход сигнала на включение внешнего генератора електроэнергии, выход для подключения GSM сигнализации.",
+        voltage: "24V",
+        capacity: "700W",
+        maxCapacity: "1000W",
+        price: 3700,
+        rarity: 2,
+        color: '#000',
+        faces: 6,
+        currentImageIndex: 0,
+        images: [
+            "img/ups-a-01.png",
+            "img/ups-a-02.png",
+            "img/ups-a-03.png"
+        ]
     }];
 
     $scope.translate = function () {
         translationService.getTranslation($scope, $scope.selectedLanguage);
     };
     //Init
-    $scope.selectedLanguage = 'en';
+    $scope.selectedLanguage = 'ru';
     $scope.translate();
 }]);
 

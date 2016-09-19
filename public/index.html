@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>AngularJS</title>
+    <title>UPS-CAT</title>
+    <link rel="shortcut icon" href="resources/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <!--
     <link data-require="bootstrap-css" data-semver="3.1.1" rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
     <link data-require="semantic-ui@*" data-semver="0.9.6" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.9.6/css/semantic.min.css" />
@@ -18,29 +20,48 @@
     <script type="text/javascript" src="resources/angular-resource.min.js"></script>
     <script type="text/javascript" src="resources/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+
     <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="../config/route.js"></script>
     <script type="text/javascript" src="js/directives/products.js"></script>
     <script type="text/javascript" src="js/services/translation.js"></script>
     <script type="text/javascript" src="js/controllers/main.js"></script>
 
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
     <style type="text/css">
-        .right {
-            float:right;
+        .site-root {
+            position: relative;
+            margin: 0 auto;
         }
-        .left {
-            margin-right: 200px;
+        .site-header {
+            top: 0px;
+            left: 0px;
+            margin: 0 auto;
+            padding-left: 0px;
+            margin-top: 20px;
         }
-        .oneoffourdiv {
-            width: 50%;
-            height: 50%;
-            float: left;
+        .site-footer {
+            margin: 0 auto;
+            padding-left: 0px;
+            margin-top: 20px;
+            background-color: rgba(31,31,31,1);
         }
     </style>
 </head>
 
 <body>
 
-<div ng-app="gemStore" ng-controller="StoreController as store">
+<div class="site-root" ng-controller="StoreController as store" ng-app="upc-cat">
+<!--
     <div id="wrapper">
         <div class="right">
             <section>
@@ -55,42 +76,60 @@
             {{translation.STORE_TITLE}}
         </div>
     </div>
-
+-->
     <!--  Store Header  -->
-    <header>
-        <h1 class="text-center">Flatlander Crafted Gems</h1>
 
-        <h2 class="text-center">– an Angular store –</h2>
-    </header>
+    <header class="site-header container">
+        <div style="display: inline-flex">
+            <img id="i2bj28esimgimage" alt="" src="resources/perfect_sin.png"
+                 style="width: 81px; height: 61px; margin-top: 10px"/>
 
-    <!--  Products Container  -->
-    <div class="list-group container">
-        <!--  Product Container  -->
-        <div class="list-group-item col-md-4" ng-repeat="product in products | orderBy:'-price'">
+            <div style="left: 109px; width: 543px; display: inline-block; top: 49px; margin-left: 10px; margin-top: 10px">
+                <a href="http://www.wix.com/demone2/camera-shop" target="_self">
+                    <span style="line-height:0.8em; font-size: 40px;">KV<span class="color_19">group</span></span>
+                </a>
 
-            <!-- $index Practice:  -->
-            <h3>Gem #{{$index + 1}}: {{product.name | uppercase}}<em class="pull-right">{{product.price |
-                currency}}</em>
-            </h3>
-
-            <!-- Image Gallery  -->
-            <div ng-show="product.images.length" ng-controller="GalleryController as gallery">
-                <div class="img-wrap">
-                    <img ng-src="{{product.images[gallery.imageIndex]}}" class="img-thumbnail center-block"/>
-                </div>
-                <ul class="img-thumbnails clearfix">
-                    <li class="small-image pull-left thumbnail" ng-repeat="image in product.images"
-                        ng-click="gallery.currentImageChange($index)">
-                        <img ng-src="{{image}}"/>
-                    </li>
-                </ul>
+                <p/>
+                <span style="line-height:1.8em; font-size: 20px;">{{translation.TITLE}}</span>
             </div>
-
-            <!-- Product Tabs  -->
-            <product-tabs></product-tabs>
-
         </div>
-    </div>
+
+        <div class="container" style="background-color: rgba(31,31,31,1); color: #EEEEEE; padding: 10px 0px 10px 0px">
+            <div class="col-md-12">
+                <nav class="col-md-7" style="padding-left: 0px;">
+                    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+                        <md-nav-item md-nav-href="#main" name="home">{{translation.HOME}}</md-nav-item>
+                        <md-nav-item md-nav-href="#info/{{selectedLanguage}}" name="info">{{translation.INFO}}</md-nav-item>
+                        <md-nav-item md-nav-href="#doc/{{selectedLanguage}}" name="doc">{{translation.TECH_DOC}}</md-nav-item>
+                        <md-nav-item md-nav-href="#contacts/{{selectedLanguage}}" name="contacts">{{translation.CONTACTS}}</md-nav-item>
+                    </md-nav-bar>
+                </nav>
+                <div class="col-md-5" style="text-align: right; padding-top: 15px;">
+                    {{translation.CALL_US}}: 073 062 0428, 068 932 3903
+                </div>
+            </div>
+        </div>
+        <div class="container" style="padding: 20px 0px 20px 0px;">
+            <img class="header-img" ng-src="img/header.png" class="img-thumbnail center-block"/>
+        </div>
+    </header>
+    <section>
+        <div ng-cloak>
+            <md-content class="md-padding">
+                <div class="ext-content">
+                    <div ng-view></div>
+                </div>
+            </md-content>
+        </div>
+    </section>
+    <footer class="site-footer container" style="color: #EEEEEE;">
+        <div class="site-footer container" style="padding-left: 40px">
+            <span>{{translation.CONTACT_US}}</span><p/><p/>
+            <span>{{translation.ADDRESS}}</span><p/>
+            <span>{{translation.PHONE_NUMBER}}: 073 062 0428, 068 932 3903</span><p/>
+            <span>{{translation.EMAIL}}</span>
+        </div>
+    </footer>
 </div>
 </body>
 

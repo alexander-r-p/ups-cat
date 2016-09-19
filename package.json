@@ -2,6 +2,9 @@
   "name"         : "UPS-CAT",
   "version"      : "0.0.1",
   "description"  : "Simple Web Catalog of UPS",
+  "scripts"      : {
+                      "start": "node server.js"
+  },
   "main"         : "server.js",
   "author"       : "Alexander Romanjuk",
   "dependencies" : {

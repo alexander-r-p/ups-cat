@@ -1,1 +1,1 @@
-var app = angular.module('gemStore', ['store-directives', 'ngResource']);
+var app = angular.module('upc-cat', ['store-directives', 'ngResource', 'ngMaterial', 'ngRoute' ]);

@@ -2,19 +2,14 @@
   <!--  Tab Navigation  -->
   <ul class="nav nav-pills">
     <li ng-class="{ active:tab.isSet(1) }">
-      <a href="" ng-click="tab.setTab(1)">Description</a>
+      <a href="" ng-click="tab.setTab(1)">{{translation.SPEC}}</a>
     </li>
     <li ng-class="{ active:tab.isSet(2) }">
-      <a href="" ng-click="tab.setTab(2)">Specs</a>
-    </li>
-    <li ng-class="{ active:tab.isSet(3) }">
-      <a href="" ng-click="tab.setTab(3)">Reviews</a>
+      <a href="" ng-click="tab.setTab(2)">{{translation.DESCRIPTION}}</a>
     </li>
   </ul>
-  <!--  Description Tab's Content  -->
-  <descriptions ng-show="tab.isSet(1)"></descriptions>
   <!--  Spec Tab's Content  -->
-  <specs ng-show="tab.isSet(2)"></specs>
-  <!--  Review Tab's Content  -->
-  <reviews ng-show="tab.isSet(3)">hi</reviews>
+  <specs ng-show="tab.isSet(1)"></specs>
+  <!--  Description Tab's Content  -->
+  <descriptions ng-show="tab.isSet(2)"></descriptions>
 </section>
