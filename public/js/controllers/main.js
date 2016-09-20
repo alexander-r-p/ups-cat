@@ -1,7 +1,7 @@
 /**
  * Created by Alexander on 20.06.2016.
  */
-app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', function ($scope, translationService, $mdDialog) {
+app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', '$sce', function ($scope, translationService, $mdDialog, $sce) {
     //$scope.imageIndex = 0;
     $scope.currentNavItem = 'home';
 
