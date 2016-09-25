@@ -1,7 +1,7 @@
 /**
  * Created by Alexander on 20.06.2016.
  */
-app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', '$sce', function ($scope, translationService, $mdDialog, $sce) {
+app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', function ($scope, translationService, $mdDialog) {
     //$scope.imageIndex = 0;
     $scope.currentNavItem = 'home';
 
@@ -57,9 +57,9 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         faces: 14,
         currentImageIndex: 0,
         images: [
-            "img/ups-a-01.png",
-            "img/ups-a-02.png",
-            "img/ups-a-03.png"
+            "/img/ups-a-01.png",
+            "/img/ups-a-02.png",
+            "/img/ups-a-03.png"
         ]
     }, {
         name: 'UPS Type B 700',
@@ -73,9 +73,9 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         faces: 12,
         currentImageIndex: 0,
         images: [
-            "img/ups-a-01.png",
-            "img/ups-a-02.png",
-            "img/ups-a-03.png"
+            "/img/ups-a-01.png",
+            "/img/ups-a-02.png",
+            "/img/ups-a-03.png"
         ]
     }, {
         name: 'UPS Type C 1000',
@@ -89,9 +89,9 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         faces: 6,
         currentImageIndex: 0,
         images: [
-            "img/ups-a-01.png",
-            "img/ups-a-02.png",
-            "img/ups-a-03.png"
+            "/img/ups-a-01.png",
+            "/img/ups-a-02.png",
+            "/img/ups-a-03.png"
         ]
     }, {
         name: 'UPS Type D 1000',
@@ -105,9 +105,9 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         faces: 6,
         currentImageIndex: 0,
         images: [
-            "img/ups-a-01.png",
-            "img/ups-a-02.png",
-            "img/ups-a-03.png"
+            "/img/ups-a-01.png",
+            "/img/ups-a-02.png",
+            "/img/ups-a-03.png"
         ]
     }];
 

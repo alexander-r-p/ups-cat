@@ -3,14 +3,14 @@ var app = angular.module('store-directives', []);
 app.directive("descriptions", function() {
   return {
     restrict: "E",
-    templateUrl: "descriptions.html"
+    templateUrl: "/descriptions.html"
   };
 });
 
 app.directive("specs", function() {
   return {
     restrict: "E",
-    templateUrl: "specs.html"
+    templateUrl: "/specs.html"
   };
 });
 
@@ -18,7 +18,7 @@ app.directive("productTabs", function() {
   return {
     restrict: "E",
 
-    templateUrl: "product-tabs.html",
+    templateUrl: "/product-tabs.html",
     controller: function() {
       this.tab = 1;
 
