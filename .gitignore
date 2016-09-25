@@ -1,0 +1,6 @@
+.idea/.name
+*.contrib
+*.iml
+*.ipr
+*.iws
+.idea/
