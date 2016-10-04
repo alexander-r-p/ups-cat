@@ -3,7 +3,7 @@
  */
 app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', function ($scope, translationService, $mdDialog) {
     //$scope.imageIndex = 0;
-    $scope.currentNavItem = 'home';
+    $scope.currentNavItem = 'main';
 
     $scope.goto = function(navItem) {
         $scope.currentNavItem = navItem;
