@@ -1,31 +1,24 @@
 app.config(function($routeProvider) {
     $routeProvider
         .when("/main", {
-            templateUrl : function(params){
-                return '/resources/i18n/' + params.localization + '/main_page.html'
-            }
-        })
-        .when("/catalog", {
-                templateUrl : function(params){
-                return '/catalog_page.html'
-            }
+            templateUrl : "/home_page.html"
         })
         .when('/info/:localization', {
             templateUrl : function(params){
-                return '/resources/i18n/' + params.localization + '/info_page.html'
+                return '/resources/i18n/info_page_' + params.localization +'.html'
             }
         })
         .when("/doc/:localization", {
             templateUrl : function(params){
-                return '/resources/i18n/' + params.localization + '/tech_doc_page.html'
+                return '/resources/i18n/tech_doc_page_' + params.localization +'.html'
             }
         })
         .when("/contacts/:localization", {
             templateUrl : function(params){
-                return '/resources/i18n/' + params.localization +'/contacts_page.html'
+                return '/resources/i18n/contacts_page_' + params.localization +'.html'
             }
         })
         .otherwise({
-            redirectTo: '/main'
+        redirectTo: '/main'
         });
 });
