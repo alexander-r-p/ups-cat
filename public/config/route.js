@@ -1,7 +1,12 @@
 app.config(function($routeProvider) {
     $routeProvider
-        .when("/main", {
-            templateUrl : "/home_page.html"
+        .when('/main/:localization', {
+            templateUrl : function(params){
+                return '/resources/i18n/main_page_' + params.localization +'.html'
+            }
+        })
+        .when("/catalog", {
+            templateUrl : "/catalog_page.html"
         })
         .when('/info/:localization', {
             templateUrl : function(params){
@@ -19,6 +24,6 @@ app.config(function($routeProvider) {
             }
         })
         .otherwise({
-        redirectTo: '/main'
+            redirectTo: '/main/ru'
         });
 });

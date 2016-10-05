@@ -144,3 +144,14 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+h1 {
+  font-size: 20px;
+  line-height: 180%;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 500;
+  color: #29B4D6;
+}
