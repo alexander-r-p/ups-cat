@@ -1,3 +1,5 @@
 <div>
-  <blockquote>{{product.description}}</blockquote>
+    <blockquote>
+        <div ng-bind-html="readAsHTML(product.description)"></div>
+    </blockquote>
 </div>

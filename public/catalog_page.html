@@ -10,7 +10,7 @@
         <!-- Image Gallery  -->
         <div ng-show="product.images.length" style="margin-top: 60px">
             <div class="img-wrap">
-                <img ng-click="showAdvanced($event)" ng-src="{{product.images[product.currentImageIndex]}}" class="img-thumbnail center-block"/>
+                <img ng-click="showAdvanced(product, $event)" ng-src="{{product.images[product.currentImageIndex]}}" class="img-thumbnail center-block"/>
             </div>
             <ul class="img-thumbnails clearfix">
                 <li class="small-image pull-left thumbnail" ng-repeat="image in product.images" ng-click="currentImageChange(product, $index)">

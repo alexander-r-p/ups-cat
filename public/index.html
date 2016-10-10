@@ -12,6 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
 
 
     <script type="text/javascript" src="/resources/jquery-2.2.4.min.js"></script>
@@ -90,7 +91,7 @@
 
         <div class="container" style="background-color: rgba(31,31,31,1); color: #EEEEEE; padding: 10px 0px 10px 0px">
             <div class="col-md-12">
-                <nav class="col-md-7" style="padding-left: 0px;">
+                <nav class="col-md-8" style="padding-left: 0px;">
                     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
                         <md-nav-item md-nav-href="#main/{{selectedLanguage}}" name="main">{{translation.HOME}}</md-nav-item>
                         <md-nav-item md-nav-href="#catalog" name="catalog">{{translation.CATALOG}}</md-nav-item>
@@ -99,7 +100,7 @@
                         <md-nav-item md-nav-href="#contacts/{{selectedLanguage}}" name="contacts">{{translation.CONTACTS}}</md-nav-item>
                     </md-nav-bar>
                 </nav>
-                <div class="col-md-5" style="text-align: right; padding-top: 15px;">
+                <div class="col-md-4" style="text-align: right; padding-top: 15px;">
                     {{translation.CALL_US}}: 073 062 0428, 068 932 3903
                 </div>
             </div>
