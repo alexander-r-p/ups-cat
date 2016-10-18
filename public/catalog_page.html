@@ -4,7 +4,7 @@
     <div style="border: 0px;" class="list-group-item col-md-3" ng-repeat="product in products | orderBy:'-name':true">
 
         <!-- $index Practice:  -->
-        <a style="cursor: pointer;" ng-click="showAdvanced($event)"><h3>{{product.name}}</h3></a>
+        <a style="cursor: pointer;" ng-click="showAdvanced(product, $event)"><h3>{{product.name}}</h3></a>
         <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
 
         <!-- Image Gallery  -->

@@ -6,6 +6,10 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
     $scope.currentNavItem = 'home';
     var currentProduct;
 
+    $scope.getImageSrc = function(name, index) {
+        return name + index + ".jpg";
+    }
+
     $scope.readAsHTML = function(snippet) {
         return readTextAsHTML(snippet);
     }
