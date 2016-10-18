@@ -160,3 +160,13 @@ h2 {
   font-weight: 500;
   color: #29B4D6;
 }
+
+.gray {
+  background: #f5f5f5;
+}
+
+.list {
+  display: inline-flex;
+  margin: 5px 0px 0px 0px;
+  padding: 0px 5px 0px 5px;
+}

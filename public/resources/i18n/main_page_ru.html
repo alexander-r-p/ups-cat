@@ -1,4 +1,4 @@
-<div style="padding-top: 0px; padding-left: 0px;" class="container">
+<div lex="" ng-cloak="" class="gridList container" style="padding-top: 0px; padding-left: 0px;">
     <article style="text-align: justify;">
         <div style="display: inline-flex; font-size: 38px; color: #f16448; line-height: 38px;">
             <img style="height: 225px;" src="/../../img/modernhouse.jpg">
@@ -8,77 +8,56 @@
             </div>
         </div>
 
-        <div style="display: inline-flex;" ng-show="16">
-            <div ng-repeat="n in [].constructor(15) track by $index + 1">
-                <div class="small-image pull-left thumbnail">
-                    <img style="height: 200px;" ng-click="showAdvanced(product, $event)" ng-src="{{getImageSrc('/img/product_img/img_full_', $index+1)}}" class="img-thumbnail center-block"/>
-                </div>
-            </div>
-        </div>
+        <md-grid-list style="padding-top: 25px;" md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
 
+            <md-grid-tile ng-repeat="n in [].constructor(16) track by $index + 1"
+                          md-rowspan="1"
+                          md-colspan="1"
+                          md-colspan-sm="1"
+                          md-colspan-xs="1"
+                          class="gray" >
+                <img ng-click="showFullImg($index, $event)" ng-src="{{getImageSrc('/img/product_img/img_prev_', $index+1)}}"/>
+            </md-grid-tile>
+        </md-grid-list>
 
-        <div style="border: 0px;" class="list-group-item col-md-3" ng-repeat="product in products | orderBy:'-name':true">
-
-            <!-- $index Practice:  -->
-            <a style="cursor: pointer;" ng-click="showAdvanced(product, $event)"><h3>{{product.name}}</h3></a>
-            <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
-
-            <!-- Image Gallery  -->
-            <div ng-show="product.images.length" style="margin-top: 60px">
-                <div class="img-wrap">
-                    <img ng-click="showAdvanced(product, $event)" ng-src="{{product.images[product.currentImageIndex]}}" class="img-thumbnail center-block"/>
-                </div>
-                <ul class="img-thumbnails clearfix">
-                    <li class="small-image pull-left thumbnail" ng-repeat="image in product.images" ng-click="currentImageChange(product, $index)">
-                        <img ng-src="{{image}}"/>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Product Tabs  -->
-            <product-tabs></product-tabs>
-
-        </div>
-
-
-        <div style="display: inline-flex; padding: 25px 0px 5px 0px;">
+        <div class="gray list">
             <img style="height: 80px;" src="/../../img/sin_w.png">
             <div style="font-size: 24px; line-height: 30px; padding: 10px 0px 0px 15px;">
                 Предназначено для гарантированого питания потребителей стабильным напряжением ~220V. При преобразовании формирует <b>идеальную форму синусоиды</b>
             </div>
         </div>
-        <div style="display: inline-flex; padding: 25px 0px 5px 0px;">
+        <div class="gray list">
             <img style="height: 80px; margin-right: 30px;" src="/../../img/eco.png">
             <div style="font-size: 24px; line-height: 30px; padding: 10px 0px 0px 15px;">
                 Специальный режим ЕКО позволяет <b>економить электроэнергию</b>, используя по возможности энергию внешнего источника
             </div>
         </div>
-        <div style="display: inline-flex; padding: 25px 0px 5px 0px;">
+        <div class="gray list">
             <img src="/../../img/sepic.png">
             <div style="font-size: 22px; line-height: 30px; padding: 15px 0px 15px 20px;">
                 Дополнительная зарядка с преобразователем <b>SEPIC</b> позволяет заряжать аккумулятор от разных источников электроэнергии (солнечных батарей напряжением 7-30V,
                 термоелектрических преобразователей, внешних аккумуляторов 12V или 24V)
             </div>
         </div>
-        <div style="display: inline-flex; padding: 5px 0px 5px 0px;">
+        <div class="gray list">
             <img src="/../../img/shield.png">
             <div style="font-size: 24px; line-height: 30px; padding: 30px 0px 15px 20px;">
                 При наличии сети, <b>защищает</b> от пониженного и повышенного напряжения, <b>стабилизирует и фильтрует</b> от помех выходное напряжение
             </div>
         </div>
-        <div style="display: inline-flex; padding: 25px 0px 5px 0px;">
+        <div class="gray list">
             <img style="height: 87px" src="/../../img/cooling.png">
             <div style="font-size: 24px; line-height: 30px; padding: 15px 0px 15px 20px;">
                 Прибор разработан с <b>минимальным тепловыделением</b>, что позволяет встраивать его в закрытые ящики
             </div>
         </div>
-        <div style="display: inline-flex; padding: 25px 0px 5px 0px;">
+        <div class="gray list">
             <img style="padding-left: 8px; height: 87px; margin-right: 7px;" src="/../../img/power.png">
             <div style="font-size: 24px; line-height: 30px; padding: 15px 0px 15px 20px;">
                 <b>Мощность</b> преобразователя 600Вт (кратковременно 800Вт) позволяет автономно питать устройства до 1000ВА
             </div>
         </div>
-        <div style="display: inline-flex; padding: 25px 0px 5px 0px;">
+        <div class="gray list">
             <img style="margin-top: 15px; height: 80px;" src="/../../img/battery.jpg">
             <div style="font-size: 22px; line-height: 30px; padding: 0px 0px 15px 20px;">
                 Встроена <b>мощная зарядка для аккумуляторов большой емкости</b> (ток заряда до 9А) поддерживает полностью заряженным аккумулятор в рабочем режиме,
