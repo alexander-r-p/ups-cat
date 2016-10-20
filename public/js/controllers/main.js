@@ -7,6 +7,16 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
     var currentProduct;
     var imgSrc;
 
+    $scope.addToShopCart = function (product, event) {
+        console.log(event);
+        if (typeof(Storage) !== "undefined") {
+            //localStorage.getItem();
+            //localStorage.setItem("shopCart", product);
+        } else {
+            // Sorry! No Web Storage support..
+        }
+    };
+
     $scope.getImageSrc = function(name, index) {
         return name + index + ".jpg";
     }

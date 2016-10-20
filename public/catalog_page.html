@@ -5,7 +5,10 @@
 
         <!-- $index Practice:  -->
         <a style="cursor: pointer;" ng-click="showAdvanced(product, $event)"><h3>{{product.name}}</h3></a>
-        <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
+        <div>
+            <img ng-click="addToShopCart(product, $event)" class="pull-left" style="max-height: 30px; padding-right: 10px;" ng-src="/img/cart.png">
+            <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
+        </div>
 
         <!-- Image Gallery  -->
         <div ng-show="product.images.length" style="margin-top: 60px">
