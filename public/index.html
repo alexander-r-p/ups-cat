@@ -50,42 +50,31 @@
             margin-top: 20px;
             background-color: rgba(31,31,31,1);
         }
+        .header-padding-0 {
+            padding: 0px;
+        }
     </style>
 </head>
 
 <body>
 
 <div class="site-root" ng-controller="StoreController as store" ng-app="kvgroup-cat">
-<!--
-    <div id="wrapper">
-        <div class="right">
-            <section>
-                <select ng-change="translate()" ng-model="selectedLanguage">
-                    <option value="en">English</option>
-                    <option value="ua">Ukrainian</option>
-                    <option value="ru">Russian</option>
-                </select>
-            </section>
-        </div>
-        <div class="left">
-            {{translation.STORE_TITLE}}
-        </div>
-    </div>
--->
-    <!--  Store Header  -->
-
     <header class="site-header container">
-        <div style="display: inline-flex">
-            <img id="i2bj28esimgimage" alt="" src="/resources/perfect_sin.png"
-                 style="width: 81px; height: 61px; margin-top: 10px"/>
-
-            <div style="left: 109px; width: 543px; display: inline-block; top: 49px; margin-left: 10px; margin-top: 10px">
-                <a target="_self">
-                    <span style="line-height:0.8em; font-size: 40px;">KV<span class="color_19">group</span></span>
-                </a>
-
-                <p/>
-                <span style="line-height:1.8em; font-size: 20px;">{{translation.TITLE}}</span>
+        <div class="container header-padding-0">
+            <div class="col-md-12 header-padding-0">
+                <div class="col-md-1 header-padding-0">
+                    <img id="i2bj28esimgimage" alt="" src="/resources/perfect_sin.png"/>
+                </div>
+                <div class="col-md-9 header-padding-0">
+                    <a target="_self">
+                        <span style="line-height:0.8em; font-size: 40px;">KV<span class="color_19">group</span></span>
+                    </a>
+                    <p/>
+                    <span style="line-height:1.8em; font-size: 20px;">{{translation.TITLE}}</span>
+                </div>
+                <div class="col-md-2 header-padding-0">
+                    <img ng-click="showShoppingCart($event)" class="pull-right" style="max-height: 45px;" ng-src="/img/cart.png">
+                </div>
             </div>
         </div>
 

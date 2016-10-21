@@ -9,13 +9,32 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
 
     $scope.addToShopCart = function (product, event) {
         console.log(event);
+        //localStorage.removeItem("productsInCart");
         if (typeof(Storage) !== "undefined") {
-            //localStorage.getItem();
-            //localStorage.setItem("shopCart", product);
+            var productsInCart = localStorage.getItem("productsInCart");
+            if (productsInCart === null) {
+                ++product.quantity;
+                productsInCart = new Array(product);
+            } else {
+                productsInCart = JSON.parse(productsInCart);
+            }
+            if (!isProductAlreadyInCart(productsInCart, product)) {
+                ++product.quantity;
+                productsInCart.push(product);
+            }
+            localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
         } else {
             // Sorry! No Web Storage support..
         }
     };
+
+    var isProductAlreadyInCart = function(productsInCart, product) {
+        if (productsInCart == null) return false;
+        for (var i = 0; i < productsInCart.length; i++) {
+            if (productsInCart[i].name === product.name) return true;
+        }
+        return false;
+    }
 
     $scope.getImageSrc = function(name, index) {
         return name + index + ".jpg";
@@ -73,6 +92,47 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
             });
     };
 
+    $scope.showShoppingCart = function (event) {
+        console.log(event);
+        $mdDialog.show({
+                controller: ShoppingCartController,
+                templateUrl: '/shop-cart.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose:true,
+                fullscreen: true // Only for -xs, -sm breakpoints.
+            })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
+
+    function ShoppingCartController($scope, $mdDialog) {
+        $scope.getProductsFromCart = function() {
+            if (typeof(Storage) !== "undefined") {
+                var productsInCart = JSON.parse(localStorage.getItem("productsInCart"));
+                if (productsInCart === null) {
+                    productsInCart = [];
+                }
+            }
+            return productsInCart;
+        };
+
+        $scope.hide = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function() {
+            $mdDialog.cancel();
+        };
+
+        $scope.answer = function(answer) {
+            $mdDialog.hide(answer);
+        };
+    };
+
     function DialogController($scope, $mdDialog) {
         $scope.getImage = function() {
             return imgSrc;
@@ -110,6 +170,7 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         color: '#CCC',
         faces: 14,
         currentImageIndex: 0,
+        quantity: 0,
         images: [
             "/img/ups-a-01.png",
             "/img/ups-a-02.png",
@@ -126,6 +187,7 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         color: '#EEE',
         faces: 12,
         currentImageIndex: 0,
+        quantity: 0,
         images: [
             "/img/ups-a-01.png",
             "/img/ups-a-02.png",
@@ -142,6 +204,7 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         color: '#000',
         faces: 6,
         currentImageIndex: 0,
+        quantity: 0,
         images: [
             "/img/ups-a-01.png",
             "/img/ups-a-02.png",
@@ -158,6 +221,7 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         color: '#000',
         faces: 6,
         currentImageIndex: 0,
+        quantity: 0,
         images: [
             "/img/ups-a-01.png",
             "/img/ups-a-02.png",
