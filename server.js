@@ -1,5 +1,6 @@
 // set up ======================================================================
 var express  = require('express');
+var nodemailer = require('nodemailer');
 var app      = express();                               // create our app w/ express
 ////var mongoose = require('mongoose');                     // mongoose for mongodb
 //var port     = process.env.PORT || 8080;                // set the port

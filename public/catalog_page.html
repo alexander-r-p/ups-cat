@@ -6,12 +6,17 @@
         <!-- $index Practice:  -->
         <a style="cursor: pointer;" ng-click="showAdvanced(product, $event)"><h3>{{product.name}}</h3></a>
         <div>
-            <img ng-click="addToShopCart(product, $event)" class="pull-left" style="max-height: 30px; padding-right: 10px;" ng-src="/img/cart.png">
-            <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
+
+            <section layout="row" layout-sm="column" layout-align="left center" layout-wrap>
+                <md-button ng-click="addToShopCart(product, $event);" class="md-icon-button md-primary" aria-label="Settings">
+                    <md-icon md-svg-icon="/img/cart.svg"></md-icon>
+                </md-button>
+                <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
+            </section>
         </div>
 
         <!-- Image Gallery  -->
-        <div ng-show="product.images.length" style="margin-top: 60px">
+        <div ng-show="product.images.length" style="margin-top: 25px">
             <div class="img-wrap">
                 <img ng-click="showAdvanced(product, $event)" ng-src="{{product.images[product.currentImageIndex]}}" class="img-thumbnail center-block"/>
             </div>
@@ -24,6 +29,5 @@
 
         <!-- Product Tabs  -->
         <product-tabs></product-tabs>
-
     </div>
 </div>

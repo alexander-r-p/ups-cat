@@ -1,92 +1,65 @@
 <md-dialog aria-label="Shopping Cart" style="min-width: 80%;">
-    <form name="projectForm" ng-cloak>
+    <form name="shoppingCartForm" ng-model-options="{ updateOn: 'blur' }" ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Корзина</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
-                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                    <md-icon md-svg-src="/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
 
         <md-dialog-content>
             <md-list ng-cloak>
-                <md-list-item ng-repeat="product in getProductsFromCart()" class="noright">
+                <md-list-item ng-repeat="product in getOrder().products" class="noright">
                     <img alt="{{ product.name }}" ng-src="{{ product.images[0] }}" class="md-avatar"/>
+
                     <p>{{ product.name }}</p>
                     <input style="max-width: 70px;" class="md-secondary" required type="number" step="any"
-                           name="quantity" value="{{product.quantity}}" min="1" max="4999" ng-pattern="/^1234$/"/>
+                           ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="product.quantity" name="quantity" min="1" max="4999" ng-pattern="/^1234$/"/>
                 </md-list-item>
             </md-list>
             <md-divider></md-divider>
 
             <div layout="column" ng-cloak>
+
                 <md-subheader class="md-no-sticky">Заполните, пожалуйста, форму чтобы мы могли с Вами связатся
                 </md-subheader>
 
-                <md-content layout-padding>
-                    <div layout="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Имя</label>
-                            <input md-maxlength="30" required name="name" ng-model="user.name"/>
+                <md-input-container class="md-block">
+                    <label>Имя</label>
+                    <input required name="name" ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="getOrder().name"/>
+                </md-input-container>
 
-                            <div ng-messages="userForm.name.$error" ng-if="!showHints">
-                                <div ng-message="required">Name is required.</div>
-                                <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-                            </div>
-                        </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Номер телефона</label>
+                    <input required name="phone" ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="getOrder().phone"/>
+                </md-input-container>
 
-                        <div flex="5" hide-xs hide-sm>
-                            <!-- Spacer //-->
-                        </div>
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input name="email" ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="getOrder().email"
+                           required minlength="5" maxlength="100" ng-pattern="/^.+@.+\..+$/"/>
+                </md-input-container>
 
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Номер телефона</label>
-                            <input name="phone" ng-model="" ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/"/>
-
-                            <div class="hint">(###) ###-####</div>
-                            <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-                        </md-input-container>
-                    </div>
-
-                    <md-input-container class="md-block">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Email</label>
-                            <input name="email" ng-model="user.email"
-                                   required minlength="5" maxlength="100" ng-pattern="/^.+@.+\..+$/"/>
-
-                            <div class="hint" ng-show="showHints">How can we reach you?</div>
-
-                            <div ng-messages="userForm.email.$error" ng-hide="showHints">
-                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                                    Ваш email должен быть длиной от 5 до 100 символов и виглядить как e-mail.
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </md-input-container>
-
-                    <md-input-container class="md-block">
-                        <label>Коментарий к заказу</label>
-                        <textarea ng-model="" md-maxlength="300" rows="5" md-select-on-focus></textarea>
-                        <div ng-messages="projectForm.description.$error">
-                            <div ng-message="md-maxlength">Длина комментария должна быть не более 300 символов.</div>
-                        </div>
-                    </md-input-container>
-
-                    <p style="font-size:.8em; width: 100%; text-align: center;">
-                        Make sure to include <a href="https://docs.angularjs.org/api/ngMessages" target="_blank">ngMessages</a>
-                        module when using ng-message markup.
-                    </p>
-                </md-content>
+                <md-input-container class="md-block">
+                    <label>Коментарий к заказу</label>
+                    <textarea md-maxlength="300" rows="5" md-select-on-focus
+                              ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                              ng-model="getOrder().message"></textarea>
+                </md-input-container>
 
             </div>
-
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button type="submit">
+            <md-button type="submit" ng-click="submit()">
                 Отправить заказ
             </md-button>
             <md-button ng-click="answer('not useful')">

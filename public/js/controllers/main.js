@@ -1,40 +1,11 @@
 /**
  * Created by Alexander on 20.06.2016.
  */
-app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', '$sce', function ($scope, translationService, $mdDialog, $sce) {
+app.controller('StoreController', ['$scope', '$rootScope', 'translationService', '$mdDialog', '$sce', function ($scope, $rootScope, translationService, $mdDialog, $sce) {
     //$scope.imageIndex = 0;
     $scope.currentNavItem = 'home';
     var currentProduct;
     var imgSrc;
-
-    $scope.addToShopCart = function (product, event) {
-        console.log(event);
-        //localStorage.removeItem("productsInCart");
-        if (typeof(Storage) !== "undefined") {
-            var productsInCart = localStorage.getItem("productsInCart");
-            if (productsInCart === null) {
-                ++product.quantity;
-                productsInCart = new Array(product);
-            } else {
-                productsInCart = JSON.parse(productsInCart);
-            }
-            if (!isProductAlreadyInCart(productsInCart, product)) {
-                ++product.quantity;
-                productsInCart.push(product);
-            }
-            localStorage.setItem("productsInCart", JSON.stringify(productsInCart));
-        } else {
-            // Sorry! No Web Storage support..
-        }
-    };
-
-    var isProductAlreadyInCart = function(productsInCart, product) {
-        if (productsInCart == null) return false;
-        for (var i = 0; i < productsInCart.length; i++) {
-            if (productsInCart[i].name === product.name) return true;
-        }
-        return false;
-    }
 
     $scope.getImageSrc = function(name, index) {
         return name + index + ".jpg";
@@ -94,13 +65,13 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
 
     $scope.showShoppingCart = function (event) {
         console.log(event);
+        $rootScope.order = loadOrderFromStorage();
         $mdDialog.show({
                 controller: ShoppingCartController,
                 templateUrl: '/shop-cart.html',
                 parent: angular.element(document.body),
                 targetEvent: event,
                 clickOutsideToClose:true,
-                fullscreen: true // Only for -xs, -sm breakpoints.
             })
             .then(function(answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
@@ -109,15 +80,53 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
             });
     };
 
-    function ShoppingCartController($scope, $mdDialog) {
-        $scope.getProductsFromCart = function() {
-            if (typeof(Storage) !== "undefined") {
-                var productsInCart = JSON.parse(localStorage.getItem("productsInCart"));
-                if (productsInCart === null) {
-                    productsInCart = [];
-                }
+    $scope.addToShopCart = function (product, event) {
+        console.log(event);
+        //localStorage.removeItem("productsInCart");
+        if (typeof(Storage) !== "undefined") {
+            $rootScope.order = loadOrderFromStorage();
+            if ($rootScope.order.products === null) {
+                ++product.quantity;
+                $rootScope.order.products = new Array(product);
             }
-            return productsInCart;
+            if (!isProductAlreadyInCart($rootScope.order.products, product)) {
+                ++product.quantity;
+                $rootScope.order.products.push(product);
+            }
+            saveOrderToStorage($rootScope.order);
+        } else {
+            // Sorry! No Web Storage support..
+        }
+    };
+
+    var isProductAlreadyInCart = function(productsInCart, product) {
+        if (productsInCart == null) return false;
+        for (var i = 0; i < productsInCart.length; i++) {
+            if (productsInCart[i].name === product.name) return true;
+        }
+        return false;
+    }
+
+    function loadOrderFromStorage() {
+        if (typeof(Storage) !== "undefined") {
+            var order = JSON.parse(localStorage.getItem("order"));
+            if (order === null) {
+                return $rootScope.order
+            }
+        }
+        return order;
+    };
+
+    function saveOrderToStorage(order) {
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("order", JSON.stringify(order));
+        }
+    };
+
+    function ShoppingCartController($scope, $mdDialog) {
+
+        $scope.getOrder = function() {
+            return $rootScope.order;
         };
 
         $scope.hide = function() {
@@ -129,7 +138,13 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         };
 
         $scope.answer = function(answer) {
+            saveOrderToStorage($rootScope.order);
             $mdDialog.hide(answer);
+        };
+
+        $scope.submit = function(answer) {
+            $mdDialog.hide(answer);
+            saveOrderToStorage($rootScope.order);
         };
     };
 
@@ -159,6 +174,14 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         };
     };
 
+    $rootScope.order = {
+        products: [],
+        name:"",
+        email:"",
+        phone:"",
+        message:""
+    };
+
     $scope.products = [{
         name: 'UPS Type A 500',
         description: "<ul><li>Стабилизатор</li><li>индикатор напряжения</li></ul>",
@@ -166,9 +189,6 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         capacity: "350W",
         maxCapacity: "500W",
         price: 2300,
-        rarity: 7,
-        color: '#CCC',
-        faces: 14,
         currentImageIndex: 0,
         quantity: 0,
         images: [
@@ -183,9 +203,6 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         capacity: "450W",
         maxCapacity: "700W",
         price: 3200,
-        rarity: 6,
-        color: '#EEE',
-        faces: 12,
         currentImageIndex: 0,
         quantity: 0,
         images: [
@@ -200,9 +217,6 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         capacity: "600W",
         maxCapacity: "1000W",
         price: 3600,
-        rarity: 2,
-        color: '#000',
-        faces: 6,
         currentImageIndex: 0,
         quantity: 0,
         images: [
@@ -217,9 +231,6 @@ app.controller('StoreController', ['$scope', 'translationService', '$mdDialog', 
         capacity: "700W",
         maxCapacity: "1000W",
         price: 3700,
-        rarity: 2,
-        color: '#000',
-        faces: 6,
         currentImageIndex: 0,
         quantity: 0,
         images: [
