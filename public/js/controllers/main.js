@@ -1,25 +1,25 @@
 /**
  * Created by Alexander on 20.06.2016.
  */
-app.controller('StoreController', ['$scope', '$rootScope', 'translationService', '$mdDialog', '$sce', function ($scope, $rootScope, translationService, $mdDialog, $sce) {
+app.controller('StoreController', ['$scope', '$rootScope', 'translationService', '$mdDialog', '$sce', '$http', '$mdToast', '$animate', function ($scope, $rootScope, translationService, $mdDialog, $sce, $http, $mdToast, $animate) {
     //$scope.imageIndex = 0;
     $scope.currentNavItem = 'home';
     var currentProduct;
     var imgSrc;
 
-    $scope.getImageSrc = function(name, index) {
+    $scope.getImageSrc = function (name, index) {
         return name + index + ".jpg";
     }
 
-    $scope.readAsHTML = function(snippet) {
+    $scope.readAsHTML = function (snippet) {
         return readTextAsHTML(snippet);
     }
 
-    var readTextAsHTML = function(snippet) {
+    var readTextAsHTML = function (snippet) {
         return $sce.trustAsHtml(snippet);
     }
 
-    $scope.goto = function(navItem) {
+    $scope.goto = function (navItem) {
         $scope.currentNavItem = navItem;
     }
 
@@ -29,18 +29,18 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
     };
 
     $scope.showFullImg = function (index, ev) {
-        imgSrc = $scope.getImageSrc('/img/product_img/img_full_', index+1)
+        imgSrc = $scope.getImageSrc('/img/product_img/img_full_', index + 1)
         $mdDialog.show({
                 controller: DialogController,
                 templateUrl: '/full_img_dialog.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                clickOutsideToClose:true,
+                clickOutsideToClose: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
-            .then(function(answer) {
+            .then(function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
-            }, function() {
+            }, function () {
                 $scope.status = 'You cancelled the dialog.';
             });
     };
@@ -53,29 +53,28 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
                 templateUrl: '/product_description_dialog.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                clickOutsideToClose:true,
+                clickOutsideToClose: true,
                 fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
             })
-            .then(function(answer) {
+            .then(function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
-            }, function() {
+            }, function () {
                 $scope.status = 'You cancelled the dialog.';
             });
     };
 
     $scope.showShoppingCart = function (event) {
-        console.log(event);
         $rootScope.order = loadOrderFromStorage();
         $mdDialog.show({
                 controller: ShoppingCartController,
                 templateUrl: '/shop-cart.html',
                 parent: angular.element(document.body),
                 targetEvent: event,
-                clickOutsideToClose:true,
+                clickOutsideToClose: true,
             })
-            .then(function(answer) {
+            .then(function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
-            }, function() {
+            }, function () {
                 $scope.status = 'You cancelled the dialog.';
             });
     };
@@ -94,12 +93,20 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
                 $rootScope.order.products.push(product);
             }
             saveOrderToStorage($rootScope.order);
+
+            $mdToast.show(
+                $mdToast.simple()
+                    .content('Товар отправлен в корзину')
+                    .position($scope.getToastPosition())
+                    .hideDelay(5000)
+            );
+
         } else {
             // Sorry! No Web Storage support..
         }
     };
 
-    var isProductAlreadyInCart = function(productsInCart, product) {
+    var isProductAlreadyInCart = function (productsInCart, product) {
         if (productsInCart == null) return false;
         for (var i = 0; i < productsInCart.length; i++) {
             if (productsInCart[i].name === product.name) return true;
@@ -124,62 +131,94 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
     };
 
     function ShoppingCartController($scope, $mdDialog) {
-
-        $scope.getOrder = function() {
+        $scope.getOrder = function () {
             return $rootScope.order;
         };
 
-        $scope.hide = function() {
+        $scope.hide = function () {
             $mdDialog.hide();
         };
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $mdDialog.cancel();
         };
 
-        $scope.answer = function(answer) {
+        $scope.answer = function (answer) {
             saveOrderToStorage($rootScope.order);
             $mdDialog.hide(answer);
         };
 
-        $scope.submit = function(answer) {
+        $scope.submit = function (answer) {
             $mdDialog.hide(answer);
             saveOrderToStorage($rootScope.order);
+            sendMail($rootScope.order);
         };
     };
 
+    $scope.toastPosition = {
+        bottom: false,
+        top: true,
+        left: false,
+        right: true
+    };
+    $scope.getToastPosition = function () {
+        return Object.keys($scope.toastPosition)
+            .filter(function (pos) {
+                return $scope.toastPosition[pos];
+            })
+            .join(' ');
+    };
+
+    function sendMail(order) {
+        // Simple POST request example (passing data) :
+        $http.post('/sendMail', order).
+        success(function (data, status, headers, config) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .content(order.name + ', Ваш заказ отправлен, Спасибо!')
+                    .position($scope.getToastPosition())
+                    .hideDelay(10000)
+            );
+        }).
+        error(function (data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+
+    };
+
     function DialogController($scope, $mdDialog) {
-        $scope.getImage = function() {
+        $scope.getImage = function () {
             return imgSrc;
         };
 
-        $scope.getCurrentProduct = function() {
+        $scope.getCurrentProduct = function () {
             return currentProduct;
         };
 
-        $scope.parseHTML = function(snippet) {
+        $scope.parseHTML = function (snippet) {
             return readTextAsHTML(snippet);
         };
 
-        $scope.hide = function() {
+        $scope.hide = function () {
             $mdDialog.hide();
         };
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $mdDialog.cancel();
         };
 
-        $scope.answer = function(answer) {
+        $scope.answer = function (answer) {
             $mdDialog.hide(answer);
         };
     };
 
     $rootScope.order = {
         products: [],
-        name:"",
-        email:"",
-        phone:"",
-        message:""
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
     };
 
     $scope.products = [{
@@ -249,13 +288,10 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
 }]);
 
 app.controller("ReviewController", ['$scope', function () {
-
     this.review = {};
-
     this.addReview = function (product) {
         this.review.createdOn = Date.now();
         product.reviews.push(this.review);
         this.review = {};
     };
-
 }]);

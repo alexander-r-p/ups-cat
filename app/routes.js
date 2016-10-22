@@ -3,6 +3,7 @@
  */
 // load the todo model
 var Todo = require('./models/todo');
+var nodemailer = require('nodemailer');
 
 // expose the routes to our app with module.exports
 module.exports = function(app) {
@@ -62,10 +63,49 @@ module.exports = function(app) {
          */
     });
 
+    app.post('/sendMail', function(req, res) {
+        console.log('Message sending: ' + req.body.email);
+
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'kvgroupups@gmail.com', // Your email id
+                pass: 'kvgroupups01;' // Your password
+            }
+        });
+
+        var message = 'Заказ от ' + req.body.name + '<p>' +
+            'Телефон - ' + req.body.phone  + '<p>' +
+            'E-Mail - ' + req.body.email  + '<p>';
+
+
+        for (var i = 0; i < req.body.products.length; i++) {
+            var product = req.body.products[i];
+            message += product.name + ': количество - ' + product.quantity + ': цена - ' + product.price + '<p>';
+        }
+
+        var mailOptions = {
+            from: '"KVgroup - Источники бесперебойного питания" <kvgroupups@gmail.com>', // sender address
+            to: req.body.email,
+            subject: 'Заказ',
+            text: 'Заказ от ' + req.body.name + ": " + req.body.phone,
+            html: message // html body
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+        });
+
+
+        res.sendStatus(202);
+    });
+
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         var path = require('path');
         res.sendFile(path.resolve('public/index.html'));
-        //res.sendFile('/../public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
 };

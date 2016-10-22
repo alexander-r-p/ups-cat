@@ -14,16 +14,19 @@
             <md-list ng-cloak>
                 <md-list-item ng-repeat="product in getOrder().products" class="noright">
                     <img alt="{{ product.name }}" ng-src="{{ product.images[0] }}" class="md-avatar"/>
-
                     <p>{{ product.name }}</p>
+                    <h4 style="padding-right: 10px;">{{product.price | currency: "₴"}}</h4>
                     <input style="max-width: 70px;" class="md-secondary" required type="number" step="any"
                            ng-model-options="{allowInvalid: true, updateOn: 'change'}"
                            ng-model="product.quantity" name="quantity" min="1" max="4999" ng-pattern="/^1234$/"/>
                 </md-list-item>
             </md-list>
+
+            <label style="padding: 10px;">Всего: </label>
+
             <md-divider></md-divider>
 
-            <div layout="column" ng-cloak>
+            <div style="padding: 10px;" layout="column" ng-cloak>
 
                 <md-subheader class="md-no-sticky">Заполните, пожалуйста, форму чтобы мы могли с Вами связатся
                 </md-subheader>
@@ -63,7 +66,7 @@
                 Отправить заказ
             </md-button>
             <md-button ng-click="answer('not useful')">
-                Закрить
+                Отменить
             </md-button>
         </md-dialog-actions>
     </form>
