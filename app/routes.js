@@ -84,6 +84,8 @@ module.exports = function(app) {
             message += product.name + ': количество - ' + product.quantity + ': цена - ' + product.price + '<p>';
         }
 
+        message += req.body.message + '<p>';
+
         var mailOptions = {
             from: '"KVgroup - Источники бесперебойного питания" <kvgroupups@gmail.com>', // sender address
             to: 'mudrachenko.v@gmail.com',
