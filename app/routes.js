@@ -86,7 +86,7 @@ module.exports = function(app) {
 
         var mailOptions = {
             from: '"KVgroup - Источники бесперебойного питания" <kvgroupups@gmail.com>', // sender address
-            to: req.body.email,
+            to: 'mudrachenko.v@gmail.com',
             subject: 'Заказ',
             text: 'Заказ от ' + req.body.name + ": " + req.body.phone,
             html: message // html body
