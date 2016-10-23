@@ -74,9 +74,10 @@
                     <span style="line-height:1.8em; font-size: 20px;">{{translation.TITLE}}</span>
                 </div>
                 <div class="col-md-3 header-padding-0">
-                    <md-button class="md-grid-item-content pull-right" ng-click="showShoppingCart($event)">
-                        <md-icon md-svg-src="/img/cart.svg"></md-icon>
-                        <div class="md-grid-text">Корзина</div>
+                    <md-button class="pull-right" ng-click="showShoppingCart($event)">
+                        <span class="md-inline-list-icon-label"><b style="font-size: 20px;">{{getItemsQuantityInShoppingCart()}}</b></span>
+                        <md-icon style="height: 48px; width: 48px;" class="s48" md-svg-src="/img/cart.svg"></md-icon>
+                        <span class="md-inline-list-icon-label">Корзина</span>
                     </md-button>
                 </div>
             </div>

@@ -136,24 +136,52 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
         };
 
         $scope.hide = function () {
+            saveOrderToStorage($rootScope.order);
             $mdDialog.hide();
         };
 
-        $scope.cancel = function () {
-            $mdDialog.cancel();
-        };
-
-        $scope.answer = function (answer) {
+        $scope.removeItemFromOrder = function(productsInCart, product) {
+            var index = productsInCart.indexOf(product);
+            if (index > -1) {
+                productsInCart.splice(index, 1);
+            }
+            $rootScope.order.products = productsInCart;
             saveOrderToStorage($rootScope.order);
-            $mdDialog.hide(answer);
         };
 
-        $scope.submit = function (answer) {
-            $mdDialog.hide(answer);
+        $scope.calculateTotalSum = function(productsInCart) {
+            var sum = 0;
+            for (var i = 0; i < productsInCart.length; i++) {
+                sum = sum + (productsInCart[i].quantity * productsInCart[i].price);
+            }
+            return sum;
+        };
+
+        $scope.cancel = function () {
+            $rootScope.order.products = [];
+            saveOrderToStorage($rootScope.order);
+            $mdDialog.hide();
+        };
+
+        $scope.submit = function () {
+            $mdDialog.hide();
             saveOrderToStorage($rootScope.order);
             sendMail($rootScope.order);
         };
     };
+
+    $scope.getItemsQuantityInShoppingCart = function(){
+        return countItemsInCart();
+    }
+
+    function countItemsInCart() {
+        var prod = loadOrderFromStorage().products;
+        var sum = 0;
+        for (var i = 0; i < prod.length; i++) {
+            sum = sum + prod[i].quantity;
+        }
+        return sum;
+    }
 
     $scope.toastPosition = {
         bottom: false,

@@ -1,28 +1,31 @@
 <md-dialog aria-label="Shopping Cart" style="min-width: 80%;">
-    <form name="shoppingCartForm" ng-model-options="{ updateOn: 'blur' }" ng-cloak>
+    <form ng-submit="submit()" name="shoppingCartForm" ng-model-options="{ updateOn: 'blur' }" ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Корзина</h2>
                 <span flex></span>
-                <md-button class="md-icon-button" ng-click="cancel()">
+                <md-button class="md-icon-button" ng-click="hide()">
                     <md-icon md-svg-src="/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
                 </md-button>
             </div>
         </md-toolbar>
 
         <md-dialog-content>
-            <md-list ng-cloak>
+            <md-list style="padding: 10px;" ng-cloak>
                 <md-list-item ng-repeat="product in getOrder().products" class="noright">
                     <img alt="{{ product.name }}" ng-src="{{ product.images[0] }}" class="md-avatar"/>
                     <p>{{ product.name }}</p>
                     <h4 style="padding-right: 10px;">{{product.price | currency: "₴"}}</h4>
-                    <input style="max-width: 70px;" class="md-secondary" required type="number" step="any"
+                    <input style="max-width: 40px;" class="md-secondary" required type="number" step="any"
                            ng-model-options="{allowInvalid: true, updateOn: 'change'}"
-                           ng-model="product.quantity" name="quantity" min="1" max="4999" ng-pattern="/^1234$/"/>
+                           ng-model="product.quantity" name="quantity" min="1" max="99" ng-pattern="/^1234$/"/>
+                    <md-button class="md-icon-button" ng-click="removeItemFromOrder(getOrder().products, product)">
+                        <md-icon md-svg-src="/img/icons/ic_close_24px.svg" aria-label="remove"></md-icon>
+                    </md-button>
                 </md-list-item>
             </md-list>
 
-            <label style="padding: 10px;">Всего: </label>
+            <div><h4 style="padding: 10px;">Всего: {{calculateTotalSum(getOrder().products) | currency: "₴"}}</h4></div>
 
             <md-divider></md-divider>
 
@@ -61,13 +64,10 @@
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button type="submit" ng-click="submit()">
-                Отправить заказ
-            </md-button>
-            <md-button ng-click="answer('not useful')">
-                Отменить
-            </md-button>
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                <md-button type="submit" class="md-raised md-primary">Отправить заказ</md-button>
+                <md-button class="md-raised md-warn" ng-click="cancel()">Отменить заказ</md-button>
+            </section>
         </md-dialog-actions>
     </form>
 </md-dialog>
