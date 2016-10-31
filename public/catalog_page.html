@@ -11,7 +11,7 @@
                 <md-button ng-click="addToShopCart(product, $event);" class="md-icon-button md-primary" aria-label="Settings">
                     <md-icon md-svg-icon="/img/cart.svg"></md-icon>
                 </md-button>
-                <h4 class="pull-left">{{product.price | currency: "₴"}}</h4>
+                <h4 class="pull-left"><s><span style="color: red">{{product.price_before_disc | currency: "₴"}}</span></s> {{product.price | currency: "₴"}}</h4>
             </section>
         </div>
 

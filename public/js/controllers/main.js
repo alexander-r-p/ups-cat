@@ -270,6 +270,7 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
         capacity: "500W",
         maxCapacity: "700W",
         price: 3000,
+        price_before_disc: 3200,
         currentImageIndex: 0,
         quantity: 0,
         images: [
