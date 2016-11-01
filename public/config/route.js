@@ -1,4 +1,4 @@
-app.config(function($routeProvider) {
+app.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/main/:localization', {
             templateUrl : function(params){
@@ -26,4 +26,6 @@ app.config(function($routeProvider) {
         .otherwise({
             redirectTo: '/main/ru'
         });
+    $locationProvider.html5Mode(true);
+    $locationProvider.hashPrefix('!');
 });

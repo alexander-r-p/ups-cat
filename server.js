@@ -24,6 +24,10 @@ app.use(methodOverride());
 
 // routes ======================================================================
 require('./app/routes.js')(app);
+// Here we require the prerender middleware that will handle requests from Search Engine crawlers
+// We set the token only if we're using the Prerender.io service
+app.use(require('prerender-node').set('prerenderToken', 'Dk5ZXZOhqeh3m7H10UNj'));
+app.use(express.static("public"));
 
 // listen (start app with node server.js) ======================================
 //app.listen(server_port, function(){

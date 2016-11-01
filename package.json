@@ -1,7 +1,7 @@
 {
   "name"         : "UPS-CAT",
   "version"      : "0.0.1",
-  "description"  : "Simple Web Catalog of UPS",
+  "description"  : "Universal UPS System",
   "scripts"      : {
                       "start": "node server.js"
   },
@@ -12,6 +12,7 @@
     "express"         : "^4.14.0",
     "method-override" : "^2.3.6",
     "mongoose"        : "^4.5.1",
-    "morgan"          : "^1.7.0"
+    "morgan"          : "^1.7.0",
+    "prerender-node"  : "latest"
   }
 }
