@@ -183,6 +183,40 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
         return sum;
     }
 
+    $scope.showFeedbackForm = function (event) {
+        $mdDialog.show({
+                controller: FeedbackFormController,
+                templateUrl: '/feedback-form.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+            })
+            .then(function (answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function () {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
+
+    function FeedbackFormController($scope, $mdDialog) {
+        $scope.getForm = function () {
+            return $rootScope.feedbackform;
+        };
+
+        $scope.hide = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.cancel = function () {
+            $mdDialog.hide();
+        };
+
+        $scope.submit = function () {
+            $mdDialog.hide();
+            sendFeedbackMail($rootScope.feedbackform);
+        };
+    };
+
     $scope.toastPosition = {
         bottom: false,
         top: true,
@@ -212,7 +246,23 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
             // called asynchronously if an error occurs
             // or server returns response with an error status.
         });
+    };
 
+    function sendFeedbackMail(feedback) {
+        // Simple POST request example (passing data) :
+        $http.post('/sendFeedbackMail', feedback).
+        success(function (data, status, headers, config) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .content(order.name + ', Ваш вопрос отправлен, Спасибо!')
+                    .position($scope.getToastPosition())
+                    .hideDelay(10000)
+            );
+        }).
+        error(function (data, status, headers, config) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
     };
 
     function DialogController($scope, $mdDialog) {
@@ -243,6 +293,13 @@ app.controller('StoreController', ['$scope', '$rootScope', 'translationService',
 
     $rootScope.order = {
         products: [],
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
+    };
+
+    $rootScope.feedbackform = {
         name: "",
         email: "",
         phone: "",

@@ -1,0 +1,53 @@
+<md-dialog aria-label="Shopping Cart" style="min-width: 80%;">
+    <form ng-submit="submit()" name="feedbackForm" ng-model-options="{ updateOn: 'blur' }" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Мы обязательно ответим на все Ваши вопросы и пожелания!</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <md-icon md-svg-src="/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div style="padding: 10px;" layout="column" ng-cloak>
+                <md-input-container class="md-block">
+                    <label>Ваш вопрос/пожелание</label>
+                    <textarea md-maxlength="300" rows="5" md-select-on-focus
+                              ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                              ng-model="getForm().message"></textarea>
+                </md-input-container>
+
+                <md-subheader class="md-no-sticky">Заполните, пожалуйста, форму чтобы мы могли с Вами связатся
+                </md-subheader>
+
+                <md-input-container class="md-block">
+                    <label>Имя</label>
+                    <input required name="name" ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="getForm().name"/>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Номер телефона</label>
+                    <input required name="phone" ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="getForm().phone"/>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Email</label>
+                    <input name="email" ng-model-options="{allowInvalid: true, updateOn: 'change'}"
+                           ng-model="getForm().email"
+                           required minlength="5" maxlength="100" ng-pattern="/^.+@.+\..+$/"/>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                <md-button type="submit" class="md-raised md-primary">Отправить</md-button>
+                <md-button class="md-raised md-warn" ng-click="cancel()">Закрить</md-button>
+            </section>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

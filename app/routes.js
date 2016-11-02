@@ -105,6 +105,43 @@ module.exports = function(app) {
         res.sendStatus(202);
     });
 
+    app.post('/sendFeedbackMail', function(req, res) {
+        console.log('Message sending: ' + req.body.email);
+
+        var transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'kvgroupups@gmail.com', // Your email id
+                pass: 'kvgroupups01;' // Your password
+            }
+        });
+
+        var message = 'Вопрос от ' + req.body.name + '<p>' +
+            'Телефон - ' + req.body.phone  + '<p>' +
+            'E-Mail - ' + req.body.email  + '<p>';
+
+
+        message += req.body.message + '<p>';
+
+        var mailOptions = {
+            from: '"KVgroup - Источники бесперебойного питания" <kvgroupups@gmail.com>', // sender address
+            to: 'alexander.r.petrovich@gmail.com',
+            subject: 'Вопрос',
+            text: 'Вопрос от ' + req.body.name + ": " + req.body.phone,
+            html: message // html body
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+        });
+
+
+        res.sendStatus(202);
+    });
+
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         var path = require('path');

@@ -88,15 +88,17 @@
             <div class="col-md-12">
                 <nav class="col-md-8" style="padding-left: 0px;">
                     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-                        <md-nav-item md-nav-href="/main/{{selectedLanguage}}" name="main">{{translation.HOME}}</md-nav-item>
-                        <md-nav-item md-nav-href="/catalog" name="catalog">{{translation.CATALOG}}</md-nav-item>
-                        <md-nav-item md-nav-href="/info/{{selectedLanguage}}" name="info">{{translation.INFO}}</md-nav-item>
-                        <md-nav-item md-nav-href="/doc/{{selectedLanguage}}" name="doc">{{translation.TECH_DOC}}</md-nav-item>
-                        <md-nav-item md-nav-href="/contacts/{{selectedLanguage}}" name="contacts">{{translation.CONTACTS}}</md-nav-item>
+                        <md-nav-item md-nav-href="/main/{{selectedLanguage}}" name="main">Главная</md-nav-item>
+                        <md-nav-item md-nav-href="/catalog" name="catalog">Каталог</md-nav-item>
+                        <md-nav-item md-nav-href="/info/{{selectedLanguage}}" name="info">Информация</md-nav-item>
+                        <md-nav-item md-nav-href="/doc/{{selectedLanguage}}" name="doc">Техническая документация</md-nav-item>
+                        <md-nav-item md-nav-href="/contacts/{{selectedLanguage}}" name="contacts">Контакты</md-nav-item>
                     </md-nav-bar>
                 </nav>
-                <div class="col-md-4" style="text-align: right; padding-top: 15px;">
-                    {{translation.CALL_US}}: 073 062 0428, 068 932 3903
+                <div class="col-md-4" style="text-align: right;">
+                    <md-button class="pull-right" style="background-color: #1b6d85" ng-click="showFeedbackForm($event)">
+                        <span class="md-inline-list-icon-label">Задать вопрос</span>
+                    </md-button>
                 </div>
             </div>
         </div>
